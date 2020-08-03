@@ -100,7 +100,7 @@ public class HoloPolymers : MonoBehaviour
     {
 
         // Resize the base particle/cube to the original size.
-        GameObject.Find("BaseParticle").transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        this.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
         // This is for tracking topology violations (TVs):
         TVs = 0;
@@ -125,7 +125,7 @@ public class HoloPolymers : MonoBehaviour
             Vector3 initialPosition;
             if (i == 0)
             {
-                initialPosition = GameObject.Find("BaseParticle").transform.position;
+                initialPosition = this.transform.position;
             }
             else
             {
@@ -274,11 +274,9 @@ public class HoloPolymers : MonoBehaviour
     //
     public void ScalePolyLen()
     {
-        GameObject baseParticle = GameObject.Find("BaseParticle");
-
         // Calculate the number of monomers based on the size of the bounding box. If localScale = 1,
         // then the box is at the initial size, so we should recover initialPolyLen;
-        int newPolyLen = Mathf.RoundToInt(initialPolyLen * baseParticle.transform.localScale.x/0.5f);
+        int newPolyLen = Mathf.RoundToInt(initialPolyLen * this.transform.localScale.x/0.5f);
 
         // Safety checks!
         if (newPolyLen > MAX_MONOMERS)
@@ -366,7 +364,7 @@ public class HoloPolymers : MonoBehaviour
         polyLen = initialPolyLen;
 
         // Scale factor?
-        scaleFactor = 2.0f * GameObject.Find("BaseParticle").transform.localScale.x / boxSize;
+        scaleFactor = 2.0f * this.transform.localScale.x / boxSize;
 
         // System parameters
         float systemVolume = boxSize * boxSize * boxSize;
@@ -397,7 +395,7 @@ public class HoloPolymers : MonoBehaviour
             Vector3 initialPosition;
             if (i == 0)
             {
-                initialPosition = GameObject.Find("BaseParticle").transform.position;
+                initialPosition = this.transform.position;
             }
             else
             {
@@ -438,7 +436,7 @@ public class HoloPolymers : MonoBehaviour
         Interparticle_Forces();
 
         // Hide base particle.
-        GameObject.Find("BaseParticle").GetComponent<Renderer>().enabled = false;
+        this.GetComponent<Renderer>().enabled = false;
 
         // Display bond vectors, Rg, Rh if enabled.
         if (showBondVectors) DrawBonds();
@@ -550,7 +548,7 @@ public class HoloPolymers : MonoBehaviour
         if (!VisualRg) VisualRg = Instantiate(rgSphere);
         float Rg = RadiusOfGyration();
         VisualRg.transform.localScale    = new Vector3(Rg, Rg, Rg);
-        VisualRg.transform.localPosition = GameObject.Find("BaseParticle").transform.position;
+        VisualRg.transform.localPosition = this.transform.position;
     }
 
 
@@ -566,7 +564,7 @@ public class HoloPolymers : MonoBehaviour
         float Rg = RadiusOfGyration();
         VisualRh.transform.localScale = new Vector3(Rg, Rg, Rg) * RhConversion;
 
-        VisualRh.transform.localPosition = GameObject.Find("BaseParticle").transform.position;
+        VisualRh.transform.localPosition = this.transform.position;
     }
 
 
@@ -607,7 +605,7 @@ public class HoloPolymers : MonoBehaviour
     {
         if (!VisualRh) VisualRh = Instantiate(rhSphere);
         VisualRh = Instantiate(rhSphere);
-        VisualRh.transform.localPosition = GameObject.Find("BaseParticle").transform.position;
+        VisualRh.transform.localPosition = this.transform.position;
         float Rg = RadiusOfGyration();
         VisualRh.transform.localScale = new Vector3(Rg, Rg, Rg) * RhConversion;
     }
@@ -862,7 +860,7 @@ public class HoloPolymers : MonoBehaviour
 
         // We want to translate the polymer back to the center of the empty
         // simulation container object.
-        com = com - GameObject.Find("BaseParticle").transform.position;
+        com = com - this.transform.position;
 
         // Translate the polymer back to the center.
         for (int i=0; i<polyLen; i++)
